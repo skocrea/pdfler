@@ -1,5 +1,5 @@
 import PDFKit
-@testable import PDFWerkstattCore
+@testable import PDFlerCore
 import XCTest
 
 final class PDFCompressorTests: XCTestCase {

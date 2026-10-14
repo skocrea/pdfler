@@ -30,15 +30,15 @@ public enum PageRangeParser {
                 lower = bounds[0].isEmpty ? 1 : try number(bounds[0], in: part)
                 upper = bounds[1].isEmpty ? pageCount : try number(bounds[1], in: part)
             default:
-                throw PDFWerkstattError.invalidRange(part)
+                throw PDFlerError.invalidRange(part)
             }
 
-            guard lower <= upper else { throw PDFWerkstattError.invalidRange(part) }
+            guard lower <= upper else { throw PDFlerError.invalidRange(part) }
             guard lower >= 1 else {
-                throw PDFWerkstattError.pageOutOfRange(page: lower, pageCount: pageCount)
+                throw PDFlerError.pageOutOfRange(page: lower, pageCount: pageCount)
             }
             guard upper <= pageCount else {
-                throw PDFWerkstattError.pageOutOfRange(page: upper, pageCount: pageCount)
+                throw PDFlerError.pageOutOfRange(page: upper, pageCount: pageCount)
             }
             result.insert(integersIn: (lower - 1)..<upper)
         }
@@ -46,7 +46,7 @@ public enum PageRangeParser {
     }
 
     private static func number(_ text: String, in part: String) throws -> Int {
-        guard let value = Int(text) else { throw PDFWerkstattError.invalidRange(part) }
+        guard let value = Int(text) else { throw PDFlerError.invalidRange(part) }
         return value
     }
 }

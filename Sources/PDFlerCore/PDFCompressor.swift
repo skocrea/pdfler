@@ -100,7 +100,7 @@ public enum PDFCompressor {
                 do {
                     try FileManager.default.copyItem(at: input, to: temporary)
                 } catch {
-                    throw PDFWerkstattError.writeFailed(output)
+                    throw PDFlerError.writeFailed(output)
                 }
                 try PDFOperations.replace(output, with: temporary)
             }
@@ -116,7 +116,7 @@ public enum PDFCompressor {
         do {
             try data.write(to: temporary)
         } catch {
-            throw PDFWerkstattError.writeFailed(output)
+            throw PDFlerError.writeFailed(output)
         }
         try PDFOperations.replace(output, with: temporary)
         return CompressionResult(
@@ -144,7 +144,7 @@ public enum PDFCompressor {
         // Längste Seite eines A4-Blatts (11,7 Zoll) bei der Zielauflösung.
         let maxPixels = Int((settings.resolution * 11.7).rounded())
         return [
-            "Name": "PDF Werkstatt",
+            "Name": "PDFler",
             "FilterType": 1,
             "Domains": ["Applications": true, "Printing": true],
             "FilterData": [
@@ -166,17 +166,17 @@ public enum PDFCompressor {
 
     private static func filtered(_ document: PDFDocument, settings: CompressionSettings) throws -> Data {
         let filter: QuartzFilter? = QuartzFilter(properties: filterProperties(for: settings))
-        guard let filter else { throw PDFWerkstattError.renderingFailed(page: 1) }
+        guard let filter else { throw PDFlerError.renderingFailed(page: 1) }
 
         let temporary = FileManager.default.temporaryDirectory
-            .appendingPathComponent("pdfwerkstatt-\(UUID().uuidString).pdf")
+            .appendingPathComponent("pdfler-\(UUID().uuidString).pdf")
         defer { try? FileManager.default.removeItem(at: temporary) }
 
         let options: [PDFDocumentWriteOption: Any] = [PDFDocumentWriteOption(rawValue: "QuartzFilter"): filter]
         guard document.write(to: temporary, withOptions: options),
               let data = try? Data(contentsOf: temporary)
         else {
-            throw PDFWerkstattError.writeFailed(temporary)
+            throw PDFlerError.writeFailed(temporary)
         }
         return data
     }
@@ -188,7 +188,7 @@ public enum PDFCompressor {
         guard let consumer = CGDataConsumer(data: data as CFMutableData),
               let context = CGContext(consumer: consumer, mediaBox: nil, nil)
         else {
-            throw PDFWerkstattError.renderingFailed(page: 1)
+            throw PDFlerError.renderingFailed(page: 1)
         }
 
         let scale = settings.resolution / 72
@@ -201,7 +201,7 @@ public enum PDFCompressor {
             guard let bitmap = render(page, pixelWidth: pixelWidth, pixelHeight: pixelHeight),
                   let jpeg = jpegImage(from: bitmap, quality: settings.imageQuality)
             else {
-                throw PDFWerkstattError.renderingFailed(page: index + 1)
+                throw PDFlerError.renderingFailed(page: index + 1)
             }
 
             var box = CGRect(origin: .zero, size: size)

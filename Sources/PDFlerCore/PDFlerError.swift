@@ -1,6 +1,6 @@
 import Foundation
 
-public enum PDFWerkstattError: LocalizedError, Equatable {
+public enum PDFlerError: LocalizedError, Equatable {
     case cannotOpen(URL)
     case locked(URL)
     case noInput

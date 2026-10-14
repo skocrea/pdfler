@@ -1,4 +1,4 @@
-# PDF Werkstatt
+# PDFler
 
 Native macOS-App (Swift, SwiftUI, PDFKit) für die wichtigsten PDF-Aufgaben – inspiriert
 vom Funktionsumfang des [PDF24 Creator](https://github.com/PDF24/PDF24-Creator), aber
@@ -25,29 +25,29 @@ Würde eine Datei durch die Komprimierung größer, wird automatisch das Origina
 Voraussetzung: macOS 13 (Ventura) oder neuer.
 
 **In Xcode:** `Package.swift` öffnen (Doppelklick oder `open Package.swift`), oben das
-Schema **PDFWerkstatt** und „My Mac“ wählen, dann ⌘R.
+Schema **PDFler** und „My Mac“ wählen, dann ⌘R.
 
 **Im Terminal:**
 
 ```bash
-swift run PDFWerkstatt        # direkt starten
+swift run PDFler        # direkt starten
 swift test                    # Tests ausführen
-scripts/build-app.sh          # baut dist/PDF Werkstatt.app
+scripts/build-app.sh          # baut dist/PDFler.app
 ```
 
-Die fertige `PDF Werkstatt.app` kannst du in den Programme-Ordner ziehen.
+Die fertige `PDFler.app` kannst du in den Programme-Ordner ziehen.
 
 **Fertige App aus GitHub Actions:** Jeder Push baut die App (Apple Silicon + Intel) und
-hängt sie als Artefakt *PDF-Werkstatt* an den CI-Lauf. Da sie nur ad hoc signiert ist,
-beim ersten Start Rechtsklick → *Öffnen* (oder `xattr -dr com.apple.quarantine "PDF Werkstatt.app"`).
+hängt sie als Artefakt *PDFler* an den CI-Lauf. Da sie nur ad hoc signiert ist,
+beim ersten Start Rechtsklick → *Öffnen* (oder `xattr -dr com.apple.quarantine "PDFler.app"`).
 
 ## Aufbau
 
 ```
-Sources/PDFWerkstattCore/   PDF-Logik ohne UI (zusammenfügen, Seiten löschen,
+Sources/PDFlerCore/   PDF-Logik ohne UI (zusammenfügen, Seiten löschen,
                             Seitenbereiche lesen, komprimieren) – vollständig getestet
-Sources/PDFWerkstatt/       SwiftUI-Oberfläche
-Tests/PDFWerkstattCoreTests XCTest mit selbst erzeugten Test-PDFs
+Sources/PDFler/       SwiftUI-Oberfläche
+Tests/PDFlerCoreTests XCTest mit selbst erzeugten Test-PDFs
 scripts/build-app.sh        erzeugt das .app-Bundle
 ```
 
@@ -57,4 +57,4 @@ scripts/build-app.sh        erzeugt das .app-Bundle
 - Bilder → PDF und PDF → Bilder
 - Texterkennung (OCR) mit Apples Vision-Framework
 - Passwortschutz setzen/entfernen
-- Finder-Schnellaktionen („Mit PDF Werkstatt komprimieren“)
+- Finder-Schnellaktionen („Mit PDFler komprimieren“)

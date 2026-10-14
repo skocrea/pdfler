@@ -2,11 +2,11 @@ import AppKit
 import SwiftUI
 
 @main
-struct PDFWerkstattApp: App {
+struct PDFlerApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
-        WindowGroup("PDF Werkstatt") {
+        WindowGroup("PDFler") {
             ContentView()
                 .frame(minWidth: 860, minHeight: 580)
         }

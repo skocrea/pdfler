@@ -1,5 +1,5 @@
 import PDFKit
-@testable import PDFWerkstattCore
+@testable import PDFlerCore
 import XCTest
 
 final class PDFOperationsTests: XCTestCase {
@@ -27,7 +27,7 @@ final class PDFOperationsTests: XCTestCase {
 
     func testMergeWithoutInputThrows() {
         XCTAssertThrowsError(try PDFOperations.merge([])) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .noInput)
+            XCTAssertEqual(error as? PDFlerError, .noInput)
         }
     }
 
@@ -35,7 +35,7 @@ final class PDFOperationsTests: XCTestCase {
         let text = directory.appendingPathComponent("notes.pdf")
         try Data("kein PDF".utf8).write(to: text)
         XCTAssertThrowsError(try PDFOperations.merge([text])) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .cannotOpen(text))
+            XCTAssertEqual(error as? PDFlerError, .cannotOpen(text))
         }
     }
 
@@ -53,7 +53,7 @@ final class PDFOperationsTests: XCTestCase {
         let document = try PDFOperations.open(url)
 
         XCTAssertThrowsError(try PDFOperations.removePages(IndexSet([0, 1]), from: document)) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .wouldRemoveAllPages)
+            XCTAssertEqual(error as? PDFlerError, .wouldRemoveAllPages)
         }
         XCTAssertEqual(document.pageCount, 2)
     }
@@ -63,7 +63,7 @@ final class PDFOperationsTests: XCTestCase {
         let document = try PDFOperations.open(url)
 
         XCTAssertThrowsError(try PDFOperations.removePages(IndexSet([5]), from: document)) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .pageOutOfRange(page: 6, pageCount: 2))
+            XCTAssertEqual(error as? PDFlerError, .pageOutOfRange(page: 6, pageCount: 2))
         }
     }
 

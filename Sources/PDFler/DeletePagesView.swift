@@ -1,5 +1,5 @@
 import PDFKit
-import PDFWerkstattCore
+import PDFlerCore
 import SwiftUI
 
 struct DeletePagesView: View {

@@ -1,4 +1,4 @@
-@testable import PDFWerkstattCore
+@testable import PDFlerCore
 import XCTest
 
 final class PageRangeParserTests: XCTestCase {
@@ -21,10 +21,10 @@ final class PageRangeParserTests: XCTestCase {
 
     func testOutOfRangePages() {
         XCTAssertThrowsError(try PageRangeParser.parse("0", pageCount: 10)) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .pageOutOfRange(page: 0, pageCount: 10))
+            XCTAssertEqual(error as? PDFlerError, .pageOutOfRange(page: 0, pageCount: 10))
         }
         XCTAssertThrowsError(try PageRangeParser.parse("9-11", pageCount: 10)) { error in
-            XCTAssertEqual(error as? PDFWerkstattError, .pageOutOfRange(page: 11, pageCount: 10))
+            XCTAssertEqual(error as? PDFlerError, .pageOutOfRange(page: 11, pageCount: 10))
         }
     }
 

@@ -1,4 +1,4 @@
-import PDFWerkstattCore
+import PDFlerCore
 import SwiftUI
 
 struct CompressView: View {

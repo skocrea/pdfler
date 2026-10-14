@@ -5,17 +5,17 @@ import PDFKit
 public enum PDFOperations {
     public static func open(_ url: URL) throws -> PDFDocument {
         guard let document = PDFDocument(url: url) else {
-            throw PDFWerkstattError.cannotOpen(url)
+            throw PDFlerError.cannotOpen(url)
         }
         guard !document.isLocked else {
-            throw PDFWerkstattError.locked(url)
+            throw PDFlerError.locked(url)
         }
         return document
     }
 
     /// Fügt die Dateien in der angegebenen Reihenfolge zu einem neuen Dokument zusammen.
     public static func merge(_ urls: [URL]) throws -> PDFDocument {
-        guard !urls.isEmpty else { throw PDFWerkstattError.noInput }
+        guard !urls.isEmpty else { throw PDFlerError.noInput }
         return merge(documents: try urls.map(open))
     }
 
@@ -35,10 +35,10 @@ public enum PDFOperations {
     public static func removePages(_ indices: IndexSet, from document: PDFDocument) throws {
         guard !indices.isEmpty else { return }
         if let invalid = indices.first(where: { $0 < 0 || $0 >= document.pageCount }) {
-            throw PDFWerkstattError.pageOutOfRange(page: invalid + 1, pageCount: document.pageCount)
+            throw PDFlerError.pageOutOfRange(page: invalid + 1, pageCount: document.pageCount)
         }
         guard indices.count < document.pageCount else {
-            throw PDFWerkstattError.wouldRemoveAllPages
+            throw PDFlerError.wouldRemoveAllPages
         }
         for index in indices.reversed() {
             document.removePage(at: index)
@@ -52,7 +52,7 @@ public enum PDFOperations {
             .appendingPathComponent(".\(UUID().uuidString).pdf")
         guard document.write(to: temporary) else {
             try? FileManager.default.removeItem(at: temporary)
-            throw PDFWerkstattError.writeFailed(url)
+            throw PDFlerError.writeFailed(url)
         }
         try replace(url, with: temporary)
     }
@@ -67,7 +67,7 @@ public enum PDFOperations {
             }
         } catch {
             try? fileManager.removeItem(at: source)
-            throw PDFWerkstattError.writeFailed(destination)
+            throw PDFlerError.writeFailed(destination)
         }
     }
 

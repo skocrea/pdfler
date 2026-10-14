@@ -6,7 +6,7 @@ import PDFKit
 enum Fixtures {
     static func temporaryDirectory() throws -> URL {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("PDFWerkstattTests-\(UUID().uuidString)")
+            .appendingPathComponent("PDFlerTests-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
     }

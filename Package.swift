@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "PDFWerkstatt",
+    name: "PDFler",
     platforms: [.macOS(.v13)],
     products: [
-        .executable(name: "PDFWerkstatt", targets: ["PDFWerkstatt"]),
-        .library(name: "PDFWerkstattCore", targets: ["PDFWerkstattCore"]),
+        .executable(name: "PDFler", targets: ["PDFler"]),
+        .library(name: "PDFlerCore", targets: ["PDFlerCore"]),
     ],
     targets: [
-        .target(name: "PDFWerkstattCore"),
-        .executableTarget(name: "PDFWerkstatt", dependencies: ["PDFWerkstattCore"]),
-        .testTarget(name: "PDFWerkstattCoreTests", dependencies: ["PDFWerkstattCore"]),
+        .target(name: "PDFlerCore"),
+        .executableTarget(name: "PDFler", dependencies: ["PDFlerCore"]),
+        .testTarget(name: "PDFlerCoreTests", dependencies: ["PDFlerCore"]),
     ]
 )

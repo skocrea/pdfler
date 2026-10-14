@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Baut "dist/PDF Werkstatt.app". Mit UNIVERSAL=1 für Apple Silicon und Intel.
+# Baut "dist/PDFler.app". Mit UNIVERSAL=1 für Apple Silicon und Intel.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -9,13 +9,13 @@ if [[ "${UNIVERSAL:-0}" == "1" ]]; then
   ARCH_FLAGS=(--arch arm64 --arch x86_64)
 fi
 
-swift build -c release --product PDFWerkstatt ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"}
+swift build -c release --product PDFler ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"}
 BIN_DIR="$(swift build -c release ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"} --show-bin-path)"
 
-APP="dist/PDF Werkstatt.app"
+APP="dist/PDFler.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$BIN_DIR/PDFWerkstatt" "$APP/Contents/MacOS/PDFWerkstatt"
+cp "$BIN_DIR/PDFler" "$APP/Contents/MacOS/PDFler"
 
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -23,10 +23,10 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <plist version="1.0">
 <dict>
   <key>CFBundleDevelopmentRegion</key><string>de</string>
-  <key>CFBundleExecutable</key><string>PDFWerkstatt</string>
-  <key>CFBundleIdentifier</key><string>de.skocrea.pdfwerkstatt</string>
-  <key>CFBundleName</key><string>PDF Werkstatt</string>
-  <key>CFBundleDisplayName</key><string>PDF Werkstatt</string>
+  <key>CFBundleExecutable</key><string>PDFler</string>
+  <key>CFBundleIdentifier</key><string>de.skocrea.pdfler</string>
+  <key>CFBundleName</key><string>PDFler</string>
+  <key>CFBundleDisplayName</key><string>PDFler</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>${VERSION}</string>
   <key>CFBundleVersion</key><string>${VERSION}</string>
